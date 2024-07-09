@@ -1,0 +1,45 @@
+import java.util.Arrays;
+
+class TreeNode {
+    int value;
+    TreeNode left;
+    TreeNode right;
+
+    public TreeNode(int value) {
+        this.value = value;
+        this.left = null;
+        this.right = null;
+    }
+}
+
+public class BalancedTreeFromSortedArray {
+
+    // Метод для создания сбалансированного дерева из отсортированного массива
+    public static TreeNode sortedArrayToBST(int[] arr) {
+        return sortedArrayToBSTHelper(arr, 0, arr.length - 1);
+    }
+
+    private static TreeNode sortedArrayToBSTHelper(int[] arr, int start, int end) {
+        if (start > end) {
+            return null;
+        }
+
+        int mid = start + (end - start) / 2;
+        TreeNode root = new TreeNode(arr[mid]);
+
+        root.left = sortedArrayToBSTHelper(arr, start, mid - 1);
+        root.right = sortedArrayToBSTHelper(arr, mid + 1, end);
+
+        return root;
+    }
+
+    // Пример использования
+    public static void main(String[] args) {
+        int[] arr = {1, 2, 3, 4, 5, 1, 2, 23, 1, 1, 2, 65, 765, 4, 43, 4, 2324, 5, 645, 6767, 67};
+        int[] sortedArr = Arrays.stream(arr).sorted().toArray();
+
+        TreeNode balancedTree = sortedArrayToBST(sortedArr);
+
+        // Дальше можно работать с balancedTree
+    }
+}
